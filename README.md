@@ -6,7 +6,7 @@ Final Project
 
 I am an avid outdoorsman and bushcrafter 2 years ago in the middle of the pandemic I did the Colorado Trail. I am currently training for the PCT this summer, and usually go out for a week at a time with basically a pack and what I can carry.
 
-This project will be an evolution of past projects to give me what I need when I'm on the trail. Step one will be the standard finding and listing from NPS. In this project however I have combined it with the national weather service so I can get the weather for any park. Then submiting my name, email, and number will give me both email and text for severe weather alerts. I have found this to be very much needed on remote trails. Sometimes you will get a signal but not enough for data but enough for a text message. Then sometimes you will get a wifi signal but no txt messaging ability.
+This project will be an evolution of past projects to give me what I need when I'm on the trail. Step one will be the standard finding and listing from NPS. In this project however I have combined it with the national weather service so I can get the weather for any park. Then submitting my name, email, and number will give me both email and text for severe weather alerts. I have found this to be very much needed on remote trails. Sometimes you will get a signal but not enough for data but enough for a text message. Then sometimes you will get a wifi signal but no text messaging ability.
 
 # Project Requirements
 
@@ -18,8 +18,22 @@ To meet the project requirements, please ensure the following:
 
 3. **Version Control with GitHub**: Create a repository on GitHub and push your project to it. https://github.com/cscie114/csci-e-114-final-project-CrimsonCoder42/tree/main/final_app
 
-4. **CI/CD process that deploys to hosting**: Amplify provides it's own hosting steps which I found once connected to a Git repo will block actions from redeploying.
+4. **CI/CD process that deploys to hosting**: Amplify provides its own hosting steps which I found once connected to a Git repo will block actions from redeploying.
    ![Amplify Image](AmplifyDeploy.png)
+
+# Deploying to Vercel
+
+The Next.js project can also be easily deployed to Vercel, which offers seamless integration with Next.js and costs much less if you forget you kept it running. Visit the deployed project at: [https://csci-e-114-final-project-crimson-coder42.vercel.app/](https://csci-e-114-final-project-crimson-coder42.vercel.app/)
+
+To deploy your project to Vercel, follow these steps:
+
+1. Sign up for a Vercel account and log in.
+2. Connect your GitHub account to Vercel.
+3. Import your GitHub repository with the Next.js project.
+4. Configure the environment variables, if needed.
+5. Deploy your project.
+
+Vercel will automatically build and deploy your Next.js project. It's similar to how Netlify makes it easy for Gatsby projects.
 
 # How to Run the Project
 
@@ -39,7 +53,9 @@ Ensure that you have the following installed on your system:
 
 ## Clone the Repository
 
-`git clone https://github.com/cscie114/csci-e-114-final-project-CrimsonCoder42.git`
+```shell
+git clone https://github.com/cscie114/csci-e-114-final-project-CrimsonCoder42.git
+
 
 ## Install Dependencies
 
@@ -60,3 +76,4 @@ Open your browser and visit `http://localhost:3000` to access the application.
 `npm run start`
 
 This will build and serve the production version of the application at `http://localhost:3000`.
+```

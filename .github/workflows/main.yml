@@ -1,66 +1,47 @@
+# name: Deploy to Amplify
+
 # on:
 #   push:
 #     branches:
 #       - main
 
-# env:
-#   REACT_APP_S3_REGION: us-east-1
-
 # jobs:
 #   deploy:
 #     runs-on: ubuntu-latest
+
 #     steps:
-#       - uses: actions/checkout@v2
+#     - name: Checkout repository
+#       uses: actions/checkout@v2
 
-#       - name: Install Node.js
-#         uses: actions/setup-node@v2
-#         with:
-#           node-version: '16'
+#     - name: Set up Node.js
+#       uses: actions/setup-node@v2
+#       with:
+#         node-version: 14
 
-#       - name: Install dependencies for React app
-#         run: |
-#           cd frontend
-#           npm install
+#     - name: Install dependencies
+#       run: |
+#         cd next_park_weather_proj
+#         npm ci
 
-#       - name: Create .env file for React
-#         run: |
-#           cd frontend
-#           touch .env.local
-#           echo REACT_APP_S3_REGION="us-east-1" >> .env.local
+#     - name: Build Next.js app
+#       run: |
+#         cd next_park_weather_proj
+#         npm run build
 
-#       - name: Run build and tests for React app
-#         run: |
-#           cd frontend
-#           npm install
-#           npm install -g uuid
-#           npm run build
+#     - name: Install AWS CLI
+#       run: |
+#         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#         unzip awscliv2.zip
+#         sudo ./aws/install
 
-#       - name: Install dependencies for linting React app
-#         run: |
-#           cd frontend
-#           npm install eslint eslint-plugin-react --save-dev
+#     - name: Configure AWS credentials
+#       uses: aws-actions/configure-aws-credentials@v1
+#       with:
+#         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         aws-region: us-east-1
 
-#       - name: Lint the React app
-#         run: |
-#           cd frontend
-#           npx eslint src
-
-#       - name: Check linting status
-#         run: |
-#           cd frontend
-#           npx eslint src || exit 1
-
-#       - name: Configure AWS Credentials
-#         uses: aws-actions/configure-aws-credentials@v1
-#         with:
-#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#           aws-region: us-east-1
-
-#       - name: Deploy to Amplify
-#         run: |
-#           cd frontend
-#           npm install -g @aws-amplify/cli
-#           amplify configure --accessKeyId ${{ secrets.AWS_ACCESS_KEY_ID }} --secretAccessKey ${{ secrets.AWS_SECRET_ACCESS_KEY }} --region us-east-1
-#           amplify init --yes
-#           amplify push --yes
+#     - name: Deploy to Amplify
+#       run: |
+#         cd next_park_weather_proj
+#         aws amplify start-deployment --app-id <AMPLIFY_APP_ID> --branch-name main

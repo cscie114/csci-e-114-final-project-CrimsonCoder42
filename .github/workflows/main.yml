@@ -1,54 +1,56 @@
-#actions file
-name: Deploy to Amplify
+# name: CI/CD with GitHub Actions
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: 16
+#     - name: Set up Node.js
+#       uses: actions/setup-node@v2
+#       with:
+#         node-version: 16
 
-    - name: Install dependencies
-      run: |
-        cd next_park_weather_proj
-        npm ci
+#     - name: Install dependencies
+#       run: |
+#         cd next_park_weather_proj
+#         npm ci
 
-    - name: Create .env.local file
-      run: |
-        cd next_park_weather_proj
-        echo "NEXT_PUBLIC_NPS_API_KEY=${{ secrets.NEXT_PUBLIC_NPS_API_KEY }}" > .env.local
+#     - name: Create .env.local file
+#       run: |
+#         cd next_park_weather_proj
+#         echo "NEXT_PUBLIC_NPS_API_KEY=${{ secrets.NEXT_PUBLIC_NPS_API_KEY }}" > .env.local
 
-    - name: Build and package Next.js app
-      run: |
-        cd next_park_weather_proj
-        npm run build
-        
+#     - name: Build Next.js app
+#       run: |
+#         cd next_park_weather_proj
+#         npm run build
 
-    - name: Install AWS CLI
-      run: |
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install --update
+#     - name: Install AWS CLI
+#       run: |
+#         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#         unzip awscliv2.zip
+#         sudo ./aws/install --update
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-east-1
+#     - name: Configure AWS credentials
+#       uses: aws-actions/configure-aws-credentials@v1
+#       with:
+#         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#         aws-region: us-east-1
 
-    - name: Deploy to Amplify
-      run: |
-        cd next_park_weather_proj
-        aws amplify start-deployment --app-id d1jfo33x6uadxi --branch-name main
+#     - name: Deploy to S3
+#       run: |
+#         cd next_park_weather_proj
+#         aws s3 sync --acl public-read --delete out/ s3://your-bucket-name/
+
+#     - name: Invalidate CloudFront cache
+#       run: |
+#         aws cloudfront create-invalidation --distribution-id your-cloudfront-distribution-id --paths "/*"

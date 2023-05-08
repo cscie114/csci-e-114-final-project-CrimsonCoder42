@@ -1,0 +1,27 @@
+.weather-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  gap: 4px;
+  padding: 0 4px;
+  margin-top: 4px;
+}
+
+.weather-card {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px;
+  text-align: center;
+  background: none;
+  cursor: pointer;
+}
+
+.state-header {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.weather-header {
+  text-align: center;
+}

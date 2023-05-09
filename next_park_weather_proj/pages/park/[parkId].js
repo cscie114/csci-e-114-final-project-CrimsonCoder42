@@ -5,6 +5,8 @@ import styles from '../../styles/ParkPage.module.css';
 import MainLayout from '../../components/layout/layout';
 
 const ParkPage = ({ park, weather, error }) => {
+  const [to, setTo] = useState('');
+
   // Set up a router instance and get the parkId from the query parameters
   const router = useRouter();
   const parkId = router.query.parkId;
@@ -49,6 +51,42 @@ const ParkPage = ({ park, weather, error }) => {
     setCurrentPeriods(newCurrentPeriods);
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const response = await fetch('/api/sendgrid', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        to,
+        message: `
+          <h1>Weather for ${park.fullName}</h1>
+          <p>${park.description}</p>
+          <h2>Weather</h2>
+          ${groupedPeriods.map((day, index) => (
+          `<div key=${index}>
+              <h3>${day.date.slice(5)}</h3>
+              ${day.periods
+            .filter(period => (currentPeriods[index] === 'day' ? period.isDaytime : !period.isDaytime))
+            .map(period => (
+              `<div key=${period.number}>
+                    <h4>${period.name}</h4>
+                    <img src=${period.icon} alt=${period.shortForecast} />
+                    <p>Temp: ${period.temperature} ${period.temperatureUnit}</p>
+                    <p>Wind: ${period.windSpeed}, ${period.windDirection}</p>
+                    <p>Chance of precip: ${period.probabilityOfPrecipitation.value}%</p>
+                    <p>${period.shortForecast}</p>
+                  </div>`
+            ))}
+            </div>`
+        ))}
+        `,
+      })
+    });
+  }
+
   // Render the park and weather information
   return (
     <MainLayout>
@@ -82,6 +120,18 @@ const ParkPage = ({ park, weather, error }) => {
             </div>
           ))}
         </div>
+
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="to">Email to send Weather Report</label>
+          <input
+            type="text"
+            id="to"
+            name="to"
+            value={to}
+            onChange={(e) => setTo(e.target.value)}
+          />
+          <button type="submit">Send Email</button>
+        </form>
       </div>
     </MainLayout>
   );

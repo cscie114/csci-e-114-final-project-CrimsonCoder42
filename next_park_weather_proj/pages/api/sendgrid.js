@@ -23,4 +23,8 @@ async function sendEmail(req, res) {
   }
 }
 
+<<<<<<< HEAD
 export default sendEmail;
+=======
+export default sendEmail;
+>>>>>>> 8f398abf4ba376d36cf123f01fde2ae45584c419

@@ -1,5 +1,7 @@
 # final-project
 
+**_ANy changes to this repo will not update in CI/CD. Not that I don't trust anyone from Harvard but any accuont that has my credit card on file will be given access to update the code to that account._**
+
 Final Project
 
 # My Vision
